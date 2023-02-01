@@ -12,7 +12,7 @@ class ViewController: UIViewController {
     var mainLabel: UILabel = {
         var view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.text = "CALCULATE YOUR BMI"
+        view.text = "УЗНАЙТЕ ВАШ ИМТ"
         view.font = .boldSystemFont(ofSize: 40)
         view.numberOfLines = 0
         return view
@@ -22,14 +22,14 @@ class ViewController: UIViewController {
     var heihgt: UILabel = {
         var view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.text = "Height"
+        view.text = "Рост"
         view.font = .boldSystemFont(ofSize: 18)
         return view
     }()
     var heightLabel: UILabel = {
         var view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.text = "1.5m"
+        view.text = "1.5м"
         view.font = .boldSystemFont(ofSize: 18)
         return view
     }()
@@ -48,14 +48,14 @@ class ViewController: UIViewController {
     var width: UILabel = {
         var view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.text = "Width"
+        view.text = "Вес"
         view.font = .boldSystemFont(ofSize: 18)
         return view
     }()
     var widthLabel: UILabel = {
         var view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.text = "100Kg"
+        view.text = "100Кг"
         view.font = .boldSystemFont(ofSize: 18)
         return view
     }()
@@ -74,8 +74,11 @@ class ViewController: UIViewController {
     lazy var buttonONResultVC: UIButton = {
         var view = UIButton(type: .system)
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.setTitle("CALCULATE", for: .normal)
+        
+        view.setTitle("Посчиать", for: .normal)
         view.backgroundColor = .white
+        view.layer.cornerRadius = 16
+        view.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
         view.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
         
         return view
@@ -83,12 +86,12 @@ class ViewController: UIViewController {
     
     @objc func heightSliderValue(sender: UISlider) {
         let value = String(format: "%.2f", sender.value)
-        heightLabel.text = " \(value) m "
+        heightLabel.text = " \(value)М "
 
     }
     @objc func widthSliderValue(sender: UISlider) {
         let value = String(format: "%.0f", sender.value)
-        widthLabel.text = " \(value)Kg "
+        widthLabel.text = " \(value)Кг "
     }
     
     @objc func buttonPressed() {
@@ -96,13 +99,13 @@ class ViewController: UIViewController {
         let width = widthSlider.value
         let IMB = Float(width) / (Float(height) * Float(height))
         if IMB < 18.5 {
-            let realIMB = "Yoru IMB is \(String(format: "%.0f", IMB))!      Eat more pies!"
+            let realIMB = "ИМТ составило \(String(format: "%.0f", IMB))!     Ешьте больше пирогов!"
             mainLabel.text = realIMB
         } else if IMB < 24.9 {
-            let realIMB = "Yoru IMB is \(String(format: "%.0f", IMB))!      Fir as a fiddle!"
+            let realIMB = "ИМТ составило \(String(format: "%.0f", IMB))!      У вас нормальный вес!"
             mainLabel.text = realIMB
         } else {
-            let realIMB = "Yoru IMB is \(String(format: "%.0f", IMB))!      Eat less pies!"
+            let realIMB = "ИМТ составило \(String(format: "%.0f", IMB))!     Ешьте меньше пирогов!"
             mainLabel.text = realIMB
         }
     }
