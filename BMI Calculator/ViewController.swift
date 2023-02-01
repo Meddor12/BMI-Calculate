@@ -17,6 +17,7 @@ class ViewController: UIViewController {
         view.numberOfLines = 0
         return view
     }()
+    
     // -MARK:  Height UIElements
     var heihgt: UILabel = {
         var view = UILabel()
@@ -32,9 +33,13 @@ class ViewController: UIViewController {
         view.font = .boldSystemFont(ofSize: 18)
         return view
     }()
-    var heightSlider: UISlider = {
+    lazy var heightSlider: UISlider = {
         var view = UISlider()
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.minimumValue = 0.1
+        view.maximumValue = 3
+        view.value = 1.5
+        view.addTarget(self, action: #selector(heightSliderValue), for: .allTouchEvents)
         
         return view
     }()
@@ -54,28 +59,59 @@ class ViewController: UIViewController {
         view.font = .boldSystemFont(ofSize: 18)
         return view
     }()
-    var widthSlider: UISlider = {
+    lazy var widthSlider: UISlider = {
         var view = UISlider()
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.minimumValue = 1
+        view.maximumValue = 200
+        view.value = 100
+        view.addTarget(self, action: #selector(widthSliderValue), for: .allTouchEvents)
         
         return view
     }()
     
     // -MARK: Button
-    var buttonONResultVC: UIButton = {
+    lazy var buttonONResultVC: UIButton = {
         var view = UIButton(type: .system)
         view.translatesAutoresizingMaskIntoConstraints = false
         view.setTitle("CALCULATE", for: .normal)
         view.backgroundColor = .white
+        view.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
         
         return view
     }()
     
+    @objc func heightSliderValue(sender: UISlider) {
+        let value = String(format: "%.2f", sender.value)
+        heightLabel.text = " \(value) m "
+
+    }
+    @objc func widthSliderValue(sender: UISlider) {
+        let value = String(format: "%.0f", sender.value)
+        widthLabel.text = " \(value)Kg "
+    }
+    
+    @objc func buttonPressed() {
+        let height = heightSlider.value
+        let width = widthSlider.value
+        let IMB = Float(width) / (Float(height) * Float(height))
+        if IMB < 18.5 {
+            let realIMB = "Yoru IMB is \(String(format: "%.0f", IMB))!      Eat more pies!"
+            mainLabel.text = realIMB
+        } else if IMB < 24.9 {
+            let realIMB = "Yoru IMB is \(String(format: "%.0f", IMB))!      Fir as a fiddle!"
+            mainLabel.text = realIMB
+        } else {
+            let realIMB = "Yoru IMB is \(String(format: "%.0f", IMB))!      Eat less pies!"
+            mainLabel.text = realIMB
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .gray
         stackConfigs()
+        
     }
     // -MARK: UIElements Constraits
     func stackConfigs() {
